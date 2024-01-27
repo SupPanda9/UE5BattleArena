@@ -85,13 +85,17 @@ void AEnemy::Death()
 
 
 	FActorSpawnParameters SpawnParameters;
-	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
 	FVector Location = GetActorLocation();
+	//to make the spawned actor lay on the ground
+
 	FRotator Rotation = GetActorRotation();
 	if (FMath::RandBool())
 	{
 		AActor* SpawnedActor = GetWorld()->SpawnActor(AfterDeathSpawnClass, &Location, &Rotation, SpawnParameters);
+		//live several seconds after spawned
+		SpawnedActor->SetLifeSpan(Duration);
 	}
 
 	GetWorld()->GetTimerManager().ClearTimer(DeathHandle);

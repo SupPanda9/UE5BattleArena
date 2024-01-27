@@ -41,7 +41,13 @@ void ABaseTrigger::ActionEnd(AActor* ActorInRange)
 void ABaseTrigger::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogUE5TopDownARPG, Log, TEXT("OverlapBegin %s %s"), *Other->GetName(), *OtherComp->GetName());
-	ActionStart(Other);
+	
+	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+	if (Other == PlayerPawn)
+	{
+		ActionStart(Other);
+	}
+
 }
 
 void ABaseTrigger::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)

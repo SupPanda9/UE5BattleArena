@@ -29,7 +29,7 @@ public:
 
 	bool ActivateAbility(FVector Location);
 
-private:
+protected:
 	UPROPERTY(EditDefaultsOnly)
 	class UBehaviorTree* BehaviorTree;
 
@@ -51,6 +51,8 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float Power = 5.0f;
 
+	UPROPERTY(EditDefaultsOnly)
+	float Duration = 10.0f;
 
 	UPROPERTY(EditDefaultsOnly)
 	float DeathDelay = 1.0f;
@@ -64,6 +66,7 @@ private:
 	UFUNCTION()
 	void TakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigateBy, AActor* DamageCauser);
 
-	void Death();
+	UFUNCTION()
+	virtual void Death();
 
 };
