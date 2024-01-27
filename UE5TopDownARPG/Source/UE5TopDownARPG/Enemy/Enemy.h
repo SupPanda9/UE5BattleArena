@@ -26,6 +26,8 @@ public:
 	FORCEINLINE class UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
 
 	FORCEINLINE float GetHealth()const { return Health; }
+	
+	FORCEINLINE void Kill() { Death(); }
 
 	bool ActivateAbility(FVector Location);
 
