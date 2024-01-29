@@ -50,6 +50,7 @@ void UBoltAbility::ServerRPC_SpawnProjectile_Implementation(FVector Location)
 	{
 		return;
 	}
+	
 
 	return;
 }

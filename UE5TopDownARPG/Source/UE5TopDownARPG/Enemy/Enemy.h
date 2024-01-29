@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
+
 UCLASS()
 class UE5TOPDOWNARPG_API AEnemy : public ACharacter
 {

@@ -6,6 +6,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "../Abilities/BaseAbility.h"
 #include "../UE5TopDownARPG.h"
+#include "GameFramework/Actor.h"
+
 
 // Sets default values
 AEnemy::AEnemy()
@@ -95,13 +97,13 @@ void AEnemy::Death()
 	{
 		AActor* SpawnedActor = GetWorld()->SpawnActor(AfterDeathSpawnClass, &Location, &Rotation, SpawnParameters);
 		//live several seconds after spawned
-		SpawnedActor->SetLifeSpan(Duration);
+		if (SpawnedActor)
+		{
+			SpawnedActor->SetLifeSpan(Duration);
+		}
 	}
 
 	GetWorld()->GetTimerManager().ClearTimer(DeathHandle);
 
 	Destroy();
 }
-
-
-

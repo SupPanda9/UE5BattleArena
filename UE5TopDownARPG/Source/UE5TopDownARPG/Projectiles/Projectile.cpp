@@ -5,6 +5,9 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Engine/DamageEvents.h"
+#include "../UE5TopDownARPGCharacter.h"
+#include "../UE5TopDownARPG.h"
+#include "../Enemy/Enemy.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -24,6 +27,7 @@ AProjectile::AProjectile()
 
 void AProjectile::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+
 	if (IsValid(Other))
 	{
 		Other->TakeDamage(Damage, FDamageEvent(UDamageType::StaticClass()), nullptr, this);
@@ -31,7 +35,3 @@ void AProjectile::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 
 	Destroy();
 }
-
-
-
-
