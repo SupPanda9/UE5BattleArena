@@ -27,12 +27,16 @@ public:
 	FORCEINLINE class UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
 
 	FORCEINLINE float GetHealth()const { return Health; }
+	FORCEINLINE FString GetTeam()const { return Team; }
 	
 	FORCEINLINE void Kill() { Death(); }
 
 	bool ActivateAbility(FVector Location);
 
 protected:
+	UPROPERTY()
+	FString Team;
+
 	UPROPERTY(EditDefaultsOnly)
 	class UBehaviorTree* BehaviorTree;
 

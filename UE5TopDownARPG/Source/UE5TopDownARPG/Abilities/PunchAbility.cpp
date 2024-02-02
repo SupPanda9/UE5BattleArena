@@ -7,6 +7,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
 #include "Engine/DamageEvents.h"
+#include "../UE5TopDownARPGCharacter.h"
+#include "../UE5TopDownARPG.h"
+#include "../Enemy/Enemy.h"
 
 bool UPunchAbility::Activate(FVector Location)
 {
@@ -39,7 +42,7 @@ bool UPunchAbility::Activate(FVector Location)
 	//AnimInstance->Montage_SetEndDelegate(FOnMontageEnded::CreateUObject(this, &UPunchAbility::OnPunchEnded));
 
 	CollisionBox = NewObject<UBoxComponent>(this);
-	CollisionBox->SetBoxExtent(FVector(15, 15, 15));
+	CollisionBox->SetBoxExtent(FVector(10, 10, 10));
 	CollisionBox->RegisterComponent();
 	CollisionBox->AttachToComponent(Mesh, FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("hand_r_socket"));
 	CollisionBox->SetCollisionProfileName(TEXT("Ability"));
@@ -50,14 +53,17 @@ bool UPunchAbility::Activate(FVector Location)
 
 void UPunchAbility::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UObject* Outer = GetOuter();
-	AActor* Owner = Cast<AActor>(Outer);
+	AActor* Owner = Cast<AActor>(GetOuter());
 
 	if (IsValid(Other) && Other != Owner)
 	{
-		Other->TakeDamage(Damage, FDamageEvent(UDamageType::StaticClass()), nullptr, Owner);
+		//if ((Cast<AEnemy>(Owner) && Cast<AEnemy>(Other)) == false)
+		if((Other->IsA(AEnemy::StaticClass()) && Owner->IsA(AEnemy::StaticClass())) == false)
+		{
+			Other->TakeDamage(Damage, FDamageEvent(UDamageType::StaticClass()), nullptr, Owner);
+		}
 	}
-	
+
 	if (IsValid(CollisionBox))
 	{
 		CollisionBox->DestroyComponent();

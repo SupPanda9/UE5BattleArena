@@ -22,7 +22,7 @@
 AUE5TopDownARPGCharacter::AUE5TopDownARPGCharacter()
 {
 
-	Tags.Add(FName("Player"));
+	Team = FString(TEXT("Player"));
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 

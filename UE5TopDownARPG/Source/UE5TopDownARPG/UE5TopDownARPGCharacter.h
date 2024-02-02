@@ -7,7 +7,7 @@
 #include "UE5TopDownARPGCharacter.generated.h"
 
 UCLASS(Blueprintable)
-class AUE5TopDownARPGCharacter : public ACharacter
+class UE5TOPDOWNARPG_API AUE5TopDownARPGCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -32,6 +32,7 @@ public:
 	FORCEINLINE class UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
 
 	FORCEINLINE float GetHealth()const { return Health; }
+	FORCEINLINE FString GetTeam()const { return Team; }
 
 	bool ActivateAbility(FVector Location);
 
@@ -43,6 +44,9 @@ private:
 	/** Camera boom positioning the camera above the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
+
+	UPROPERTY()
+	FString Team;
 
 	UPROPERTY(EditDefaultsOnly)
 	class UWidgetComponent* WidgetComponent;

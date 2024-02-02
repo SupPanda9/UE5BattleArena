@@ -5,6 +5,10 @@
 #include "../Projectiles/Projectile.h"
 #include "../Animations/UE5TopDownARPGAnimInstance.h"
 #include "GameFramework/Character.h"
+#include "../Enemy/Enemy.h"
+#include "../UE5TopDownARPGCharacter.h"
+#include "../UE5TopDownARPG.h"
+#include "Kismet/GameplayStatics.h"
 
 bool UBoltAbility::Activate(FVector Location)
 {
@@ -45,12 +49,41 @@ void UBoltAbility::ServerRPC_SpawnProjectile_Implementation(FVector Location)
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	AActor* Projectile = GetWorld()->SpawnActor<AActor>(ProjectileClass, ProjectileSpawnLocation, Direction.Rotation(), SpawnParameters);
+	AEnemy* EnemyOwner = Cast<AEnemy>(Owner);
+	FString OwnerTeam;
+	if (EnemyOwner != nullptr)
+	{
+		OwnerTeam = EnemyOwner->GetTeam();
+		UE_LOG(LogUE5TopDownARPG, Log, TEXT("Owner is an enemy BOLTABILITY"));
+	}
+	else
+	{
+		AUE5TopDownARPGCharacter* PlayerOwner = Cast<AUE5TopDownARPGCharacter>(Owner);
+		if (PlayerOwner != nullptr)
+		{
+			OwnerTeam = PlayerOwner->GetTeam();
+		}
+		else
+		{
+			UE_LOG(LogUE5TopDownARPG, Log, TEXT("Owner is not an enemy nor a player"));
+			return;
+		}
+	}
+
+	/*AProjectile* Projectile = Cast<AProjectile>(GetWorld()->SpawnActor<AActor>(ProjectileClass, ProjectileSpawnLocation, Direction.Rotation(), SpawnParameters));
+	Projectile->SetOwnerTeam(OwnerTeam);
 	if (IsValid(Projectile) == false)
 	{
 		return;
+	}*/
+
+	FTransform SpawnTransform(Direction.Rotation(), ProjectileSpawnLocation);
+	AProjectile* Projectile = Cast<AProjectile>(UGameplayStatics::BeginDeferredActorSpawnFromClass(this, ProjectileClass, SpawnTransform));
+	if (IsValid(Projectile))
+	{
+		Projectile->SetOwnerTeam(OwnerTeam);
+		UGameplayStatics::FinishSpawningActor(Projectile, SpawnTransform);
 	}
-	
 
 	return;
 }

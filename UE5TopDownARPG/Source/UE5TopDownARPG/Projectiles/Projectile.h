@@ -12,8 +12,10 @@ class UE5TOPDOWNARPG_API AProjectile : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	AProjectile();
+	void SetOwnerTeam(FString Team);
+	void Tick(float DeltaTime);
+	void BeginPlay();
 
 protected:
 	UFUNCTION()
@@ -27,4 +29,12 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	float Damage = 10.0f;
+
+	UPROPERTY(EditDefaultsOnly)
+	float Distance = 200.0f;
+
+	FVector InitialLocation;
+
+	UPROPERTY()
+	FString OwnerTeam = FString(TEXT(""));
 };

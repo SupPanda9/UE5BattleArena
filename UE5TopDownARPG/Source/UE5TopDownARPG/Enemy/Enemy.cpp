@@ -12,6 +12,7 @@
 // Sets default values
 AEnemy::AEnemy()
 {
+	Team = FString(TEXT("Enemy"));
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
@@ -69,7 +70,7 @@ bool AEnemy::ActivateAbility(FVector Location)
 void AEnemy::TakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigateBy, AActor* DamageCauser)
 {
 	Health -= Damage;
-	UE_LOG(LogUE5TopDownARPG, Log, TEXT("Health %f"), Health);
+	UE_LOG(LogUE5TopDownARPG, Log, TEXT("Enemy Health %f"), Health);
 
 	if (Health <= 0.0f)
 	{
