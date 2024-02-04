@@ -3,6 +3,7 @@
 
 #include "UE5TopDownARPGHUD.h"
 #include "UI/EndGameWidget.h"
+#include "UI/StartMenu.h"
 #include "Kismet/GameplayStatics.h"
 
 void AUE5TopDownARPGHUD::BeginPlay()
@@ -19,6 +20,7 @@ void AUE5TopDownARPGHUD::BeginPlay()
       EndGameWidget->SetVisibility(ESlateVisibility::Collapsed);
     }
   }
+
 }
 
 void AUE5TopDownARPGHUD::ShowEndGameScreen()

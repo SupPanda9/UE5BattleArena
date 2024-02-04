@@ -5,6 +5,8 @@
 #include "UE5TopDownARPGCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 #include "UE5TopDownARPG.h"
+// test spawner
+#include "EnemySpawner.h"
 
 AUE5TopDownARPGGameMode::AUE5TopDownARPGGameMode()
 {
