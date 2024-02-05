@@ -14,5 +14,43 @@ class AUE5TopDownARPGGameMode : public AGameModeBase
 public:
 	AUE5TopDownARPGGameMode();
 
+	virtual void BeginPlay() override;
 	void EndGame(bool IsWin);
+	void SpawnWave();
+	//void SpawnEnemy(TArray<int> RandomIndex, FActorSpawnParameters SpawnParams, FVector SpawnLocation, TArray<TSubclassOf<AActor>> EnemyClasses);
+
+public:
+	// Declare the enemy blueprint classes as UPROPERTY variables
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> PuddleClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> MeleeClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> RangedClass;
+
+	FTimerHandle WaveSpawnTimerHandle;
+
+	UPROPERTY(EditDefaultsOnly)
+	int MaxPuddle = 5;
+	
+	UPROPERTY(EditDefaultsOnly)
+	int MaxMelee = 4;
+
+	UPROPERTY(EditDefaultsOnly)
+	int MaxRanged = 4;
+	
+	UPROPERTY(EditDefaultsOnly)
+	int NumberOfWaves = 1;
+
+	UPROPERTY(EditDefaultsOnly)
+	int CurrentWave = 1;
+
+	UPROPERTY(EditDefaultsOnly)
+	int TimeBetweenWaves = 30.0f; //seconds between waves spawn
+
+	UPROPERTY(EditDefaultsOnly)
+	int InitialDelay = 5.0f; //seconds before the first wave
+
 };

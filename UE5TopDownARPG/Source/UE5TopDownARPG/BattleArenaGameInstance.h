@@ -16,8 +16,9 @@ class UE5TOPDOWNARPG_API UBattleArenaGameInstance : public UGameInstance
 public:
 
 	FORCEINLINE void SetNumberOfWaves(int NewNumber) { NumberOfWaves = NewNumber; };
+	FORCEINLINE int GetNumberOfWaves() { return NumberOfWaves; };
 private:
 	UPROPERTY()
-	int NumberOfWaves;
+	int NumberOfWaves = 1;
 
 };
