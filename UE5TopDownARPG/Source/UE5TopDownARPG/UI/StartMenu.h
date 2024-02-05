@@ -17,6 +17,8 @@ class UE5TOPDOWNARPG_API UStartMenu : public UUserWidget
 public:
 	UFUNCTION(BlueprintCallable)
 	void OnPlayClicked();
+	UFUNCTION(BlueprintCallable)
+	void OnSliderValueChanged(float NewValue);
 
 protected:
 	// Override the Initialize function
@@ -26,4 +28,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	class UButton* PlayButton;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class USlider* Slider;
+
+	UPROPERTY()
+	int SliderValue;
 };

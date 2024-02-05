@@ -37,11 +37,11 @@ void UStartMenu::OnPlayClicked()
 
 void UStartMenu::OnSliderValueChanged(float NewValue)
 {
-	SliderValue = FMath::RoundToInt(NewValue);
+	SliderValue = FMath::RoundToInt(1+(NewValue*19));
 	UBattleArenaGameInstance* GameInstance = Cast<UBattleArenaGameInstance>(GetGameInstance());
 
 	if (GameInstance) {
 		GameInstance->SetNumberOfWaves(SliderValue);
-		UE_LOG(LogUE5TopDownARPG, Log, TEXT("SliderValue %d"), SliderValue);
+		UE_LOG(LogUE5TopDownARPG, Log, TEXT("SliderValue %f"), SliderValue);
 	}
 }
