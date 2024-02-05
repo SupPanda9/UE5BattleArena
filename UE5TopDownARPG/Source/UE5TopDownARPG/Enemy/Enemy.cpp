@@ -7,7 +7,8 @@
 #include "../Abilities/BaseAbility.h"
 #include "../UE5TopDownARPG.h"
 #include "GameFramework/Actor.h"
-
+#include "Components/WidgetComponent.h"
+#include "../UI/HealthbarWidget.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -27,6 +28,12 @@ AEnemy::AEnemy()
 	GetCharacterMovement()->bConstrainToPlane = true;
 	GetCharacterMovement()->bSnapToPlaneAtStart = true;
 
+	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));
+	WidgetComponent->SetCastShadow(false);
+	WidgetComponent->SetReceivesDecals(false);
+	WidgetComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	WidgetComponent->SetupAttachment(RootComponent);
+
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
@@ -37,6 +44,12 @@ AEnemy::AEnemy()
 void AEnemy::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	if (IsValid(WidgetComponent->GetWidgetClass()))
+	{
+		WidgetComponent->InitWidget();
+		HealthbarWidget = Cast<UHealthbarWidget>(WidgetComponent->GetUserWidgetObject());
+	}
 }
 
 // Called when the game starts or when spawned
@@ -47,6 +60,11 @@ void AEnemy::BeginPlay()
 	if (AbilityTemplate != nullptr)
 	{
 		AbilityInstance = NewObject<UBaseAbility>(this, AbilityTemplate);
+	}
+	if (IsValid(HealthbarWidget))
+	{
+		float HealthPercent = Health / MaxHealth;
+		HealthbarWidget->SetPercent(HealthPercent);
 	}
 }
 
@@ -71,7 +89,11 @@ void AEnemy::TakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType
 {
 	Health -= Damage;
 	UE_LOG(LogUE5TopDownARPG, Log, TEXT("Enemy Health %f"), Health);
-
+	if (IsValid(HealthbarWidget))
+	{
+		float HealthPercent = Health / MaxHealth;
+		HealthbarWidget->SetPercent(HealthPercent);
+	}
 	if (Health <= 0.0f)
 	{
 		FTimerManager& TimerManager = GetWorld()->GetTimerManager();

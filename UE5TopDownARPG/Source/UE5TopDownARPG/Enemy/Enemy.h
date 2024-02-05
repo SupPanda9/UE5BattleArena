@@ -47,6 +47,12 @@ protected:
 	TSubclassOf<class UBaseAbility> AbilityTemplate;
 
 	UPROPERTY(EditDefaultsOnly)
+	class UWidgetComponent* WidgetComponent;
+
+	UPROPERTY()
+	class UHealthbarWidget* HealthbarWidget;
+
+	UPROPERTY(EditDefaultsOnly)
 	float Health = 100.0f;
 
 	UPROPERTY(EditDefaultsOnly)
