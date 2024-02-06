@@ -4,25 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "StartMenu.generated.h"
+#include "WinGameWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class UE5TOPDOWNARPG_API UStartMenu : public UUserWidget
+class UE5TOPDOWNARPG_API UWinGameWidget : public UUserWidget
 {
 	GENERATED_BODY()
-
 public:
+	// Declare two UFUNCTIONs with the BlueprintCallable specifier
 	UFUNCTION(BlueprintCallable)
 	void OnPlayClicked();
-	
+
 	UFUNCTION(BlueprintCallable)
-	void OnSliderValueChanged(float NewValue);
-	
-	UFUNCTION(BlueprintCallable)
-	void OnCheckBoxChecked(bool CheckValue);
+	void OnQuitClicked();
+
 protected:
 	// Override the Initialize function
 	virtual bool Initialize() override;
@@ -31,12 +29,6 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	class UButton* PlayButton;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class USlider* Slider;
-	
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UCheckBox* CheckBox;
-	
-	UPROPERTY()
-	int SliderValue;
+	UPROPERTY(meta = (BindWidget))
+	class UButton* QuitButton;
 };

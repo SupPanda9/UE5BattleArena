@@ -17,8 +17,26 @@ public:
 
 	FORCEINLINE void SetNumberOfWaves(int NewNumber) { NumberOfWaves = NewNumber; };
 	FORCEINLINE int GetNumberOfWaves() { return NumberOfWaves; };
+
+	FORCEINLINE void SetIsInfinite(bool isChecked) { bIsInfinite = isChecked; };
+	FORCEINLINE int GetIsInfinite() { return bIsInfinite; };
+
+	FORCEINLINE void SetAllWavesSpawned(bool AllSpawned) { bAllWavesSpawned = AllSpawned; };
+	FORCEINLINE int GetAllWavesSpawned() { return bAllWavesSpawned; };
+
+	FORCEINLINE void SetAliveEnemies(int NumberOfEnemies) { AliveEnemies = NumberOfEnemies; };
+	FORCEINLINE int GetAliveEnemies() { return AliveEnemies; };
 private:
 	UPROPERTY()
 	int NumberOfWaves = 1;
+
+	UPROPERTY()
+	bool bIsInfinite = 0;
+
+	UPROPERTY()
+	bool bAllWavesSpawned = 0;
+
+	UPROPERTY()
+	int AliveEnemies = 0;
 
 };

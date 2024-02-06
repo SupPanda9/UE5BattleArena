@@ -29,6 +29,15 @@ void AUE5TopDownARPGPlayerController::OnPlayerDied()
 	}
 }
 
+void AUE5TopDownARPGPlayerController::OnPlayerKilledAllEnemies()
+{
+	AUE5TopDownARPGHUD* HUD = Cast<AUE5TopDownARPGHUD>(GetHUD());
+	if (IsValid(HUD))
+	{
+		HUD->ShowWinGameScreen();
+	}
+}
+
 void AUE5TopDownARPGPlayerController::BeginPlay()
 {
 	// Call the base class  

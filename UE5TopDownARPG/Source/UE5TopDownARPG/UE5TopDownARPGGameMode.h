@@ -33,13 +33,13 @@ public:
 	FTimerHandle WaveSpawnTimerHandle;
 
 	UPROPERTY(EditDefaultsOnly)
-	int MaxPuddle = 5;
+	int MaxPuddle = 2;
 	
 	UPROPERTY(EditDefaultsOnly)
-	int MaxMelee = 4;
+	int MaxMelee = 1;
 
 	UPROPERTY(EditDefaultsOnly)
-	int MaxRanged = 4;
+	int MaxRanged = 1;
 	
 	UPROPERTY(EditDefaultsOnly)
 	int NumberOfWaves = 1;

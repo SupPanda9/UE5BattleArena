@@ -21,6 +21,9 @@ protected:
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
 
+	/*UPROPERTY()
+	class UAIPerceptionComponent* AIPerceptionComponent;*/
+
 	UPROPERTY()
 	class UBlackboardComponent* BlackboardComponent;
 

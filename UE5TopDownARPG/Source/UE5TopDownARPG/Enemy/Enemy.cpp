@@ -9,6 +9,8 @@
 #include "GameFramework/Actor.h"
 #include "Components/WidgetComponent.h"
 #include "../UI/HealthbarWidget.h"
+#include "../BattleArenaGameInstance.h"
+#include "../UE5TopDownARPGPlayerController.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -113,19 +115,31 @@ void AEnemy::Death()
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
 	FVector Location = GetActorLocation();
-	//to make the spawned actor lay on the ground
 
 	FRotator Rotation = GetActorRotation();
 	if (FMath::RandBool())
 	{
 		AActor* SpawnedActor = GetWorld()->SpawnActor(AfterDeathSpawnClass, &Location, &Rotation, SpawnParameters);
-		//live several seconds after spawned
+
 		if (SpawnedActor)
 		{
 			SpawnedActor->SetLifeSpan(Duration);
 		}
 	}
+	UBattleArenaGameInstance* GameInstance = Cast<UBattleArenaGameInstance>(GetGameInstance());
+	if (IsValid(GameInstance)) 
+	{
+		GameInstance->SetAliveEnemies(GameInstance->GetAliveEnemies() - 1);
+		if (GameInstance->GetAllWavesSpawned() && GameInstance->GetAliveEnemies() == 0) {
+			AUE5TopDownARPGPlayerController* PlayerController = Cast<AUE5TopDownARPGPlayerController>(GetWorld()->GetFirstPlayerController());
 
+			if (PlayerController)
+			{
+				PlayerController->OnPlayerKilledAllEnemies();
+			}
+
+		}
+	}
 	GetWorld()->GetTimerManager().ClearTimer(DeathHandle);
 
 	Destroy();

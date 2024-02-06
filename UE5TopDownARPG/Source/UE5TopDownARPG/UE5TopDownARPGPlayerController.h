@@ -20,6 +20,7 @@ public:
 	AUE5TopDownARPGPlayerController();
 
 	void OnPlayerDied();
+	void OnPlayerKilledAllEnemies();
 
 	/** Time Threshold to know if it was a short press */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)

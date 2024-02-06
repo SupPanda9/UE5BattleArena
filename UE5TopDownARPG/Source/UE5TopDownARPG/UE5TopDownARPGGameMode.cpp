@@ -35,8 +35,8 @@ void AUE5TopDownARPGGameMode::SpawnWave()
     SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
     TArray<TSubclassOf<AActor>> EnemyClasses;
-    EnemyClasses.Add(PuddleClass);
     EnemyClasses.Add(MeleeClass);
+	EnemyClasses.Add(PuddleClass);
     EnemyClasses.Add(RangedClass);
 
 	TArray<int> RandomIndex;
@@ -53,22 +53,26 @@ void AUE5TopDownARPGGameMode::SpawnWave()
 		RandomIndex.Add(2);
 	}
 
+	UBattleArenaGameInstance* GameInstance = Cast<UBattleArenaGameInstance>(GetGameInstance());
+
     for (int i = 0; i < MaxMelee + MaxPuddle + MaxRanged; i++) {
         FVector SpawnLocation;
-        SpawnLocation.X = FMath::RandRange(100.0f, 3400.0f);
-        SpawnLocation.Y = FMath::RandRange(100.0f, 3400.0f);
-        SpawnLocation.Z = 500.0f;
+        SpawnLocation.X = FMath::RandRange(300.0f, 3200.0f);
+        SpawnLocation.Y = FMath::RandRange(300.0f, 3200.0f);
+        SpawnLocation.Z = 100.0f;
 
         TSubclassOf<AEnemy> EnemyClass = EnemyClasses[RandomIndex[i]];
         UE_LOG(LogUE5TopDownARPG, Log, TEXT("%s"), EnemyClass);
         if (IsValid(EnemyClass))
         {
             GetWorld()->SpawnActor<AActor>(EnemyClass, SpawnLocation, FRotator(), SpawnParameters);
+			GameInstance->SetAliveEnemies(GameInstance->GetAliveEnemies() + 1);
         }
     }
 
 	if (CurrentWave == NumberOfWaves) 
 	{
+		GameInstance->SetAllWavesSpawned(true);
 		GetWorld()->GetTimerManager().ClearTimer(WaveSpawnTimerHandle);
 		return;
 	}
@@ -79,7 +83,12 @@ void AUE5TopDownARPGGameMode::SpawnWave()
 void AUE5TopDownARPGGameMode::BeginPlay()
 {
 	UBattleArenaGameInstance* GameInstance = Cast<UBattleArenaGameInstance>(GetGameInstance());
-	NumberOfWaves = GameInstance->GetNumberOfWaves();
+	if (GameInstance->GetIsInfinite()) {
+		NumberOfWaves = -1;
+	}
+	else {
+		NumberOfWaves = GameInstance->GetNumberOfWaves();
+	}
 	UE_LOG(LogUE5TopDownARPG, Log, TEXT("Number Of Waves %d"), NumberOfWaves);
 	GetWorld()->GetTimerManager().SetTimer(WaveSpawnTimerHandle, this, &AUE5TopDownARPGGameMode::SpawnWave, TimeBetweenWaves, true, InitialDelay);
 }
