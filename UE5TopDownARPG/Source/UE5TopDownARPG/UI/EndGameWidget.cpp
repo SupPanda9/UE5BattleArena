@@ -4,6 +4,7 @@
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "../BattleArenaGameInstance.h"
 
 bool UEndGameWidget::Initialize()
 {
@@ -33,4 +34,11 @@ void UEndGameWidget::OnPlayClicked()
 void UEndGameWidget::OnQuitClicked()
 {
 	UKismetSystemLibrary::QuitGame(GetWorld(), GetOwningPlayer(), EQuitPreference::Quit, false);
+}
+
+void UEndGameWidget::SetEndScore()
+{
+	UBattleArenaGameInstance* GameInstance = Cast<UBattleArenaGameInstance>(GetGameInstance());
+	KilledEnemies = FString::FromInt(GameInstance->GetKilledEnemies());
+	CurrentWaveNumber = FString::FromInt(GameInstance->GetCurrentWaveNumber());
 }

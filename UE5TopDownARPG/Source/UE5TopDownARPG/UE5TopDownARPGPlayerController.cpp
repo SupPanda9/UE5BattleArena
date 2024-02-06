@@ -11,6 +11,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "UE5TopDownARPG.h"
+#include "BattleArenaGameInstance.h"
 
 AUE5TopDownARPGPlayerController::AUE5TopDownARPGPlayerController()
 {
@@ -22,11 +23,14 @@ AUE5TopDownARPGPlayerController::AUE5TopDownARPGPlayerController()
 
 void AUE5TopDownARPGPlayerController::OnPlayerDied()
 {
+	UBattleArenaGameInstance* GameInstance = Cast<UBattleArenaGameInstance>(GetGameInstance());
+	
 	AUE5TopDownARPGHUD* HUD = Cast<AUE5TopDownARPGHUD>(GetHUD());
 	if (IsValid(HUD))
 	{
 		HUD->ShowEndGameScreen();
 	}
+	GameInstance->SetDefaults();
 }
 
 void AUE5TopDownARPGPlayerController::OnPlayerKilledAllEnemies()

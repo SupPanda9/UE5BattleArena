@@ -54,12 +54,12 @@ void AUE5TopDownARPGGameMode::SpawnWave()
 	}
 
 	UBattleArenaGameInstance* GameInstance = Cast<UBattleArenaGameInstance>(GetGameInstance());
-
+	GameInstance->SetCurrentWaveNumber(GameInstance->GetCurrentWaveNumber() + 1);
     for (int i = 0; i < MaxMelee + MaxPuddle + MaxRanged; i++) {
         FVector SpawnLocation;
-        SpawnLocation.X = FMath::RandRange(300.0f, 3200.0f);
-        SpawnLocation.Y = FMath::RandRange(300.0f, 3200.0f);
-        SpawnLocation.Z = 100.0f;
+        SpawnLocation.X = FMath::RandRange(300.0f, 1500.0f);
+        SpawnLocation.Y = FMath::RandRange(300.0f, 1500.0f);
+        SpawnLocation.Z = 350.0f;
 
         TSubclassOf<AEnemy> EnemyClass = EnemyClasses[RandomIndex[i]];
         UE_LOG(LogUE5TopDownARPG, Log, TEXT("%s"), EnemyClass);
@@ -78,6 +78,7 @@ void AUE5TopDownARPGGameMode::SpawnWave()
 	}
 
 	CurrentWave++;
+	
 }
 
 void AUE5TopDownARPGGameMode::BeginPlay()

@@ -22,6 +22,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnQuitClicked();
 
+	void SetEndScore();
 protected:
 	// Override the Initialize function
 	virtual bool Initialize() override;
@@ -32,4 +33,10 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	class UButton* QuitButton;
+
+	UPROPERTY(BlueprintReadWrite)
+	FString KilledEnemies;
+
+	UPROPERTY(BlueprintReadWrite)
+	FString CurrentWaveNumber;
 };

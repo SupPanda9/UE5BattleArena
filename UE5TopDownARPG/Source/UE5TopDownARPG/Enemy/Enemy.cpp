@@ -130,9 +130,11 @@ void AEnemy::Death()
 	if (IsValid(GameInstance)) 
 	{
 		GameInstance->SetAliveEnemies(GameInstance->GetAliveEnemies() - 1);
+		GameInstance->SetKilledEnemies(GameInstance->GetKilledEnemies() + 1);
 		if (GameInstance->GetAllWavesSpawned() && GameInstance->GetAliveEnemies() == 0) {
 			AUE5TopDownARPGPlayerController* PlayerController = Cast<AUE5TopDownARPGPlayerController>(GetWorld()->GetFirstPlayerController());
 
+			GameInstance->SetDefaults();
 			if (PlayerController)
 			{
 				PlayerController->OnPlayerKilledAllEnemies();

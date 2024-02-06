@@ -48,7 +48,7 @@ public:
 	int CurrentWave = 1;
 
 	UPROPERTY(EditDefaultsOnly)
-	int TimeBetweenWaves = 30.0f; //seconds between waves spawn
+	int TimeBetweenWaves = 15.0f; //seconds between waves spawn
 
 	UPROPERTY(EditDefaultsOnly)
 	int InitialDelay = 5.0f; //seconds before the first wave

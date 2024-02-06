@@ -4,6 +4,7 @@
 #include "UE5TopDownARPGHUD.h"
 #include "UI/EndGameWidget.h"
 #include "UI/WinGameWidget.h"
+#include "UI/GameStatisticsWidget.h"
 #include "Kismet/GameplayStatics.h"
 
 void AUE5TopDownARPGHUD::BeginPlay()
@@ -13,8 +14,14 @@ void AUE5TopDownARPGHUD::BeginPlay()
   APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
   if (IsValid(PlayerController))
   {
+    GameStatisticsWidget = CreateWidget<UGameStatisticsWidget>(PlayerController, GameStatisticsWidgetClass);
     WinGameWidget = CreateWidget<UWinGameWidget>(PlayerController, WinGameWidgetClass);
     EndGameWidget = CreateWidget<UEndGameWidget>(PlayerController, EndGameWidgetClass);
+    if (IsValid(GameStatisticsWidget))
+    {
+        GameStatisticsWidget->AddToViewport();
+        GameStatisticsWidget->SetVisibility(ESlateVisibility::Visible);
+    }
     if (IsValid(WinGameWidget))
     {
         WinGameWidget->AddToViewport();
@@ -29,6 +36,11 @@ void AUE5TopDownARPGHUD::BeginPlay()
 
 }
 
+void AUE5TopDownARPGHUD::UpdateGameStatistics()
+{
+    GameStatisticsWidget->SetValues();
+}
+
 void AUE5TopDownARPGHUD::ShowWinGameScreen()
 {
     if (IsValid(WinGameWidget))
@@ -39,8 +51,9 @@ void AUE5TopDownARPGHUD::ShowWinGameScreen()
 
 void AUE5TopDownARPGHUD::ShowEndGameScreen()
 {
-  if (IsValid(EndGameWidget))
-  {
-    EndGameWidget->SetVisibility(ESlateVisibility::Visible);
-  }
+    if (IsValid(EndGameWidget))
+    {
+        EndGameWidget->SetEndScore();
+        EndGameWidget->SetVisibility(ESlateVisibility::Visible);
+    }
 }
