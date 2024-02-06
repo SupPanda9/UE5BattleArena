@@ -33,7 +33,7 @@ void AUE5TopDownARPGGameMode::SpawnWave()
 {
     FActorSpawnParameters SpawnParameters;
     SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
+	
     TArray<TSubclassOf<AActor>> EnemyClasses;
     EnemyClasses.Add(MeleeClass);
 	EnemyClasses.Add(PuddleClass);

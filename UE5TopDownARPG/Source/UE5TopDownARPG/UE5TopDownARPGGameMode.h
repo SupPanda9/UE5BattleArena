@@ -21,13 +21,13 @@ public:
 
 public:
 	// Declare the enemy blueprint classes as UPROPERTY variables
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AActor> PuddleClass;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AActor> MeleeClass;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AActor> RangedClass;
 
 	FTimerHandle WaveSpawnTimerHandle;
@@ -36,7 +36,7 @@ public:
 	int MaxPuddle = 2;
 	
 	UPROPERTY(EditDefaultsOnly)
-	int MaxMelee = 1;
+	int MaxMelee = 2;
 
 	UPROPERTY(EditDefaultsOnly)
 	int MaxRanged = 1;
